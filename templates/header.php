@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio</title>
-    <link rel ="stylesheet" href="static/css/stylishA.css">
+    <link rel ="stylesheet" href="static/css/estiloNormal.css">
 </head>
 <body>
     <header>
@@ -28,8 +28,7 @@
                     ?>
                         <li><a href="proyecto.php?cat=<?= $a["nombre"] ?>"><?= $a["nombre"] ?></a></li>
                     <?php
-                }
-                ?>
+                    }
                     ?>
                     <li><a href="contacto.php">Contacto</a></li>
                     <?php
@@ -44,11 +43,6 @@
                             <li><button id="botonVerde"><a href="./login.php">Login</a></button></li>
                         <?php } ?> 
                     
-                    <?php
-                    //Iniciar sesion
-                    
-                    
-                    ?>
                 </ul>
             </div>
         </div>

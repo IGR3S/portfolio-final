@@ -1,3 +1,11 @@
+<?php
+
+require_once("templates/header.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/portfolio-final/includes/conexion.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/portfolio-final/includes/funciones.php");
+
+?>
+
 <h2>Proyectos</h2>
     <form action="" method="get">
         <input class="filtro" type="text" name="fil">
@@ -35,31 +43,6 @@
         </div>
         <?php
     }
-function obtenerProyectos($conexion, $categoria)
-{
-    if ($categoria != null) {
-        $sql = "SELECT p.id, p.titulo, p.descripcion, c.nombre AS categoria, p.imagen, GROUP_CONCAT(t.nombre SEPARATOR ', ') AS tecnologias
-        FROM proyectos p
-        INNER JOIN categorias c ON p.categoria_id = c.id
-        INNER JOIN proyecto_tecnologia pt ON p.id = pt.proyecto_id
-        INNER JOIN tecnologias t ON pt.tecnologia_id = t.id
-        WHERE c.nombre = ?
-        GROUP BY p.id;";
-        $stmt = $conexion->prepare($sql);
-        $stmt->execute([$categoria]);
-    } else {
-        $sql = "SELECT p.id,p.titulo,p.descripcion,c.nombre AS categoria,p.imagen,GROUP_CONCAT(t.nombre SEPARATOR ', ') AS tecnologias
-        FROM proyectos p
-        INNER JOIN categorias c ON p.categoria_id = c.id
-        INNER JOIN proyecto_tecnologia pt ON p.id = pt.proyecto_id
-        INNER JOIN tecnologias t ON pt.tecnologia_id = t.id
-        GROUP BY p.id;";
-        $stmt = $conexion->prepare($sql);
-        $stmt->execute();
-    }
-    $resultado = $stmt->fetchAll();
-    return $resultado;
-}
-$cat = $_GET['cat'] ?? null;
-$fil = $_GET['fil'] ?? null;
+$rutaBase = __DIR__;
+require_once("templates/footer.php");
 ?>

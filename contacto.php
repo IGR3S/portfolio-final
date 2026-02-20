@@ -51,7 +51,7 @@ require_once("templates/header.php");
 </html>
 
 <?php
-
+$rutaBase = __DIR__;
 require_once("templates/footer.php");
 
 ?>

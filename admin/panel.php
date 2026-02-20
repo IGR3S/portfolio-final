@@ -1,5 +1,6 @@
 <?php
-require_once '../templates/header_admin.php';
+require_once("../templates/header_admin.php");
+
 if (!isset($_SESSION['admin']) || $_SESSION['admin'] !== "admin") {
     header('Location: ../login.php');
     exit();
@@ -11,20 +12,24 @@ if (isset($_GET['categoria'])) {
 }
 ?>
 <main>
-    <h1>Administracion de proyectos (admin)</h1>
-
-    <form action="panel.php" method="get">
+    <h1>Administracion de proyectos</h1>
+    <div class="filtroCat">
+    <form action="panel.php" method="get" >
         <form action="" method="get">
-         <p>Filtro por categoria: </p>
-         <?php
-            $select = generarSelect($conexion, true);
-            echo $select;
-         ?>
-         <input type="submit" value="Filtrar">
-      </form>
-    <a href="exportar_proyectos.php" class="boton-azul">Exportar CSV</a>
-    <a href="proyecto_nuevo.php" class="boton-verde">Nuevo proyecto</a>
-    <a href="logout.php" class="logout">Cerrar sesion</a>
+            <label>Filtro por categoria: </label>
+            <?php
+               $select = generarSelect($conexion, true);
+               echo $select;
+            ?>
+            <input type="submit" value="Filtrar">
+        </form>
+    </div>
+    <div class="botonesSobreTabla">
+        <a href="exportar_proyectos.php" id="botonAzul">Exportar CSV</a>
+        <a href="proyecto_nuevo.php" id="botonVerde">Nuevo proyecto</a>
+        <a href="../logout.php" id="botonRojo">Cerrar sesion</a>
+    </div>
+    
     <br><br>
     <table border="1">
         <tr>
@@ -35,33 +40,43 @@ if (isset($_GET['categoria'])) {
             <th>Acciones</th>
         </tr>
 
-        <?php foreach (obtenerProyectos($conexion, $categoria) as $proyecto) {
-            ?>
-            <tr>
-                <td>
-                    <?= $proyecto['titulo'] ?>
-                </td>
-                <td>
-                    <?= $proyecto['descripcion'] ?>
-                </td>
-
-                <td>
-                    <?= $proyecto['categoria_nombre'] ?>
-                </td>
-                <td>
-                    <?= $proyecto["tecnologias"]?>
-                </td>
-                <td>
-                    <a href="proyecto_editar.php?id=<?= $proyecto['id'] ?>" class="boton-azul">Editar</a><a href="proyecto_borrar.php?id=<?= $proyecto['id'] ?>" class="logout">Borrar</a>
-                </td>
-            </tr>
-            <?php
-            //revisar porque da problemas en la linea 27 del funciones.php
-        } ?>
-
+        <?php $resultado = obtenerProyectos($conexion, $cat);
+      $proyectos = [];
+      foreach ($resultado as $fila) {
+        $id = $fila['id'];
+        if (!isset($proyectos[$id])) {
+           $proyectos[$id] = $fila;
+           $proyectos[$id]['tecnologias'] = [];
+        }
+        $proyectos[$id]['tecnologias'][] = $fila['tecnologias'];
+        }
+        foreach ($proyectos as $a) {
+         ?>
+               <tr>
+                  <td><?= $a['titulo'] ?></td>
+                  <td><?= $a['descripcion'] ?></td>
+                  <td><?= $a['categoria'] ?></td>
+                  <?php 
+                  foreach ($a['tecnologias'] as $tec) { ?>
+                     <td><?= $tec ?></td>
+                  <?php 
+                  } ?>
+                  <td class="botonesTabla">
+                     <form action="proyecto_editar.php" method="post">
+                        <input type="hidden" value="<?= $a['id'] ?>" name="id">
+                        <input type="submit" value="Editar" id="botonAzul">
+                     </form>
+                     <form action="proyecto_borrar.php" method="post">
+                        <input type="hidden" value="<?= $a['id'] ?>" name="id">
+                        <input type="submit" value="Borrar" id="botonRojo">
+                     </form>
+               </td>
+               </tr>
+        <?php } ?>
     </table>
 </main>
 
 <?php
+$rutaBase = __DIR__;
 require_once '../templates/footer.php';
 ?>

@@ -1,16 +1,13 @@
-<?php
-	function conectarBD(){
-	
-		$usuario = "root";
-		$password = "";
-		$dsn = "mysql:host=localhost;dbname=portfolio";
+<?php 
+    require_once('configuracion.php');
 
-		try {
-    	  	$conexion = new PDO($dsn, $usuario, $password);
-		   return $conexion;  			
-		} catch (PDOException $e) {
-			echo 'Error de conexión con la base de datos: ' . $e->getMessage();
-		}	
-	}
+    try {
+        $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";chsrset=" . DB_CHARSET;
+        $conexion = new PDO($dsn, DB_USER, DB_PASS);[
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC];
 
+    } catch (\PDOException $e) {
+        die("Error de conexion a la base de datos:". $e->getMessage());
+    }
 ?>

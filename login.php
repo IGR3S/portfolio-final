@@ -47,7 +47,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 </html>
 
 <?php 
-
+$rutaBase = __DIR__;
     require_once("templates/footer.php");
 
 ?>

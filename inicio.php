@@ -2,12 +2,12 @@
 
     require_once("templates/header.php");
 
-    if(isset($_COOKIE['vistas'])){
-        $vistas = (int)$_COOKIE['vistas'] + 1;
+    if(isset($_COOKIE['visitas'])){
+        $visitas = (int)$_COOKIE['visitas'] + 1;
     }else{
-        $vistas = 1;
+        $visitas = 1;
     }
-    setcookie("vistas", $vistas, time()+3600, "/");
+    setcookie("visitas", $visitas, time()+3600, "/");
 ?>
 
 <div class="centro">
@@ -23,7 +23,7 @@
 
 
 <?php 
-
+$rutaBase = __DIR__;
     require_once("templates/footer.php");
 
 ?>
