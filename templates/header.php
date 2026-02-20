@@ -1,7 +1,7 @@
 <?php
     session_start();
-    require_once($_SERVER['DOCUMENT_ROOT'] . "/portfolio/includes/conexion.php");
-    require_once($_SERVER['DOCUMENT_ROOT'] . "/portfolio/includes/funciones.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/portfolio-final/includes/conexion.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/portfolio-final/includes/funciones.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
